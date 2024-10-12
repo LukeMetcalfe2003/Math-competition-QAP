@@ -1,12 +1,12 @@
 <%- include('partials/header') %>
-    <main class="main-content index_container">
+<main class="main-content index_container">
     <h1>Leaderboards</h1>
     <ol>
         <% leaderboards.forEach(function(leaderboard) { %>
             <li><%= leaderboard.name %>: <%= leaderboard.score %></li>
         <% }); %>
-        </ol>
-        <a href="/quiz">Play quiz!</a>
-</body>
+    </ol>
+    <a href="/quiz">Play quiz!</a>
 </main>
+</body>
 </html>

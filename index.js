@@ -1,34 +1,35 @@
 const express = require('express');
+const session = require('express-session'); 
 const app = express();
 const port = 3000;
-const { getQuestion, isCorrectAnswer, getCurrentStreak } = require('./utils/mathUtilities');
+const { getQuestion, isCorrectAnswer, getCurrentStreak, addToLeaderboard, leaderboards } = require('./utils/mathUtilities'); // Import leaderboards
 
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true })); // For parsing form data
-app.use(express.static('public')); // To serve static files (e.g., CSS)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(session({ secret: 'test', resave: false, saveUninitialized: true })); 
 
-// Initialize question, streak, leaderboards
-let currStreak = 0;
-let leaderboards = [];
-let currQuestion = getQuestion(); 
-
-
-//Some routes required for full functionality are missing here. Only get routes should be required
 app.get('/', (req, res) => {
     const currentStreak = getCurrentStreak();
     res.render('index', { currentStreak });
 });
 
-app.get('/quiz', (req, res) => {
-    res.render('quiz', {Question: currQuestion});
-});
-
 app.get('/leaderboards', (req, res) => {
-    res.render('leaderboards', {leaderboards});
+    res.render('leaderboards', { leaderboards });
 });
 
+app.get('/quiz', (req, res) => {
+    const quizQuestion = getQuestion();
+    req.session.question = quizQuestion;
+    res.render('quiz', { quizQuestion });
+});
 
-// Start the server
+app.post('/quiz', (req, res) => {
+    const { name, score } = req.body;
+    addToLeaderboard(name, score);
+    res.redirect('/leaderboards');
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

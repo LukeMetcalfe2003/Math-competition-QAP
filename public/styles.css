@@ -46,3 +46,15 @@ body {
 .index_container .navigation__container :last-child {
     margin-right: 0px
 }
+
+main a:link {
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #5d8efb;
+    background-color: white;
+    border-radius: 5px;
+}

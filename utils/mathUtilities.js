@@ -29,7 +29,7 @@ function getQuestion() {
     }
 
     return{
-        question: question, answer: correctAnswer,
+        quizQuestion: question, quizAnswer: correctAnswer,
     };
 
 }
@@ -47,37 +47,30 @@ let currentStreak = 0;
 let leaderboards = [];
 
 // Leaderboards function
-function addToLeaderboard(currentStreak) {
-    let scoreToAdd = {
-        currentStreak: currentStreak,
-    };
+function addToLeaderboard(name, score) {
+    let entry = { name, score };
 
     if (leaderboards.length < 10) {
-        leaderboards.push(scoreToAdd);
-    }else{
-        let lowestStreak = Math.min(...leaderboards.map(entry => entry.currentStreak));
-        // if da new score is higher than the lowest score, replace it and resort later
-        if (currentStreak > lowestStreak) {
-            let lowestIndex = leaderboards.findIndex(entry => entry.currentStreak === lowestStreak);
-            leaderboards[lowestIndex] = scoreToAdd;
-        }else{
-            console.log("Did not make it to the leaderboard... Try again!");
+        leaderboards.push(entry);
+    } else {
+        let lowestScore = Math.min(...leaderboards.map(entry => entry.score));
+        if (score > lowestScore) {
+            let lowestIndex = leaderboards.findIndex(entry => entry.score === lowestScore);
+            leaderboards[lowestIndex] = entry;
         }
     }
 
-    // sort the leaderboard
-    leaderboards.sort((a, b) => b.currentStreak - a.currentStreak);
+    leaderboards.sort((a, b) => b.score - a.score);
     leaderboards = leaderboards.slice(0, 10);
-
-    return leaderboards;
 }
+
 
 function getCurrentStreak(){
     return currentStreak;
 }
 
 function isCorrectAnswer(question, answer) {
-    if(answer != question.answer){
+    if(answer != question.quizAnswer){
         return {correct: false, currentStreak: currentStreak};
     } else {
         currentStreak++;
@@ -89,4 +82,6 @@ module.exports = {
     getQuestion,
     isCorrectAnswer,
     getCurrentStreak,
+    addToLeaderboard,
+    leaderboards
 }
