@@ -1,4 +1,4 @@
-const { isCorrectAnswer, getQuestion } = require("../../utils/mathUtilities");
+const { isCorrectAnswer, getQuestion, } = require("../../utils/mathUtilities");
 
 describe("Tests for getQuestion", () => {
 
@@ -7,3 +7,4 @@ describe("Tests for getQuestion", () => {
 describe("Tests for isCorrectAnswer", () => {
     
 });
+
