@@ -1,12 +1,16 @@
 <%- include('partials/header') %>
 <main class="main-content index_container">
     <h1>Leaderboards</h1>
-    <ol>
-        <% leaderboards.forEach(function(leaderboard) { %>
-            <li><%= leaderboard.name %>: <%= leaderboard.score %></li>
-        <% }); %>
-    </ol>
-    <a href="/quiz">Play quiz!</a>
+    <% if (leaderboards.length > 0) { %>
+        <ol class="leaderboard-list">
+            <% leaderboards.forEach((score, index) => { %>
+                <li><span class="rank"> Rank: <%= index + 1 %> </span><span class="score"> Score: <%= score %></span></li>
+            <% }); %>
+        </ol>
+    <% } else { %>
+        <p>No scores yet!</p>
+    <% } %>
+    <a href="/">Home</a>
 </main>
 </body>
 </html>

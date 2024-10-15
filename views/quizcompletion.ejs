@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+<main class="main-content index_container">
+    <!-- See if answer is correct -->
+    <% if (correct) { %>
+        <p>Correct!</p>
+        <p>Current streak: <%= streak %></p>
+    <% } else { %>
+        <p>Incorrect!</p>
+    <% } %>
+
+    <a href="/quiz">Next</a>
+    <a href="/">Home</a>
+</main>
+</body>
+</html>
